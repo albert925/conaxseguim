@@ -1,0 +1,275 @@
+<?php
+	include '../../config.php';
+	session_start();
+	if (isset($_SESSION['adm'])) {
+		$usuariounico=$_SESSION['adm'];
+		$sacarinform="SELECT * from administrador where usuadmin='$usuariounico'";
+		$queryad=mysql_query($sacarinform,$conexion) or die (mysql_error());
+		while ($adv=mysql_fetch_array($queryad)) {
+			$idad=$adv['id_admin'];
+			$correo=$adv['correo_adm'];
+			$avatar=$adv['avatar_adm'];
+		}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, maximun-scale=1" />
+	<link rel="icon" href="../../imagenes/logo.png" />
+	<title>Tareas</title>
+	<link rel="stylesheet" href="../../css/normalize.css" />
+	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="stylesheet" href="../../css/iconos/style.css" />
+	<link rel="stylesheet" href="../../css/menu.css" />
+	<script src="../../js/jquery_2_1_1.js"></script>
+	<script src="../../js/scripamd.js"></script>
+	<script src="../../js/ingrestareas.js"></script>
+</head>
+<body>
+	<header>
+		<article>
+			<nav id="mnP">
+				<ul>
+					<li><a href="../../users">Inicio</a></li>
+					<li>
+						<a href="../../users/mis_tareas">Tareas</a>
+						<div class="submen" data-num="3"><span class="icon-ctrl"></span></div>
+						<ul class="children3">
+							<li><a href="../../users/mis_tareas">Mis tareas</a></li>
+							<li><a href="../../users/indicador">Indicadores</a></li>
+							<li><a href="../../users/indicadorTotal">Indicador total</a></li>
+						</ul>
+					</li>
+					<li><a href="../../users/metas" class="selecionado">Metas</a></li>
+					<li><a href="../../clientes">Clientes</a></li>
+					<li><a href="../../eventos">Eventos</a></li>
+					<li><a href="../../cerrar">Salir</a></li>
+				</ul>
+			</nav>
+			<div id="mn_mov"><span class="icon-menu"></span></div>
+			<div id="ifmorver" class="veradmD">
+				<?php 
+					// echo "$usuariounico";
+					$imagenadv="../../".$avatar;
+				?>
+				<figure style="background-image:url(<?php echo $imagenadv ?>);">
+					<!--Imagen-->
+				</figure>
+			</div>
+		</article>
+		<div class="botnomenu">
+			<center><img src="../../imagenes/abajo_b.png" alt="abajo" /></center>
+		</div>
+	</header><!-- /header -->
+	<section>
+		<h1>Metas</h1>
+		<article id="menub">
+			<div id="MtusA">Meta por departamento</div>
+			<div id="MtusB">Meta por Direcionador</div>
+		</article>
+		<article id="sinscroll">
+				<?php
+					$DH=date("d");
+					$MH=date("n");
+					$MHB=date("m");
+					$YH=date("Y");
+					$dia_hoy=$YH."-".$MH."-".$DH;
+					$metassql="SELECT * from metas where mes_mt='$MH' and year_mt='$YH' order by id_meta asc";
+					$dentrosql=mysql_query($metassql,$conexion) or die (mysql_error());
+					while ($mt=mysql_fetch_array($dentrosql)) {
+						$idM=$mt['id_meta'];
+						$prM=$mt['precio_meta'];
+						$resM=$mt['restante_meta'];
+						$mesM=$mt['mes_mt'];
+						$yearM=$mt['year_mt'];
+						$dpM=$mt['depart_metas'];
+						switch ($mesM) {
+							case '1':
+								$nombmes="Enero";
+								break;
+							case '2':
+								$nombmes="Febrero";
+								break;
+							case '3':
+								$nombmes="Marzo";
+								break;
+							case '4':
+								$nombmes="Abril";
+								break;
+							case '5':
+								$nombmes="Mayo";
+								break;
+							case '6':
+								$nombmes="Junio";
+								break;
+							case '7':
+								$nombmes="Julio";
+								break;
+							case '8':
+								$nombmes="Agosto";
+								break;
+							case '9':
+								$nombmes="Septiembre";
+								break;
+							case '10':
+								$nombmes="Octubre";
+								break;
+							case '11':
+								$nombmes="Noviembre";
+								break;
+							case '12':
+								$nombmes="Diciembre";
+								break;
+							default:
+								$nombmes="Meses";
+								break;
+						}
+						$nombre_depart="SELECT * from departamento where id_depart='$dpM'";
+						$sql_name=mysql_query($nombre_depart,$conexion) or die (mysql_error());
+						while ($fnd=mysql_fetch_array($sql_name)) {
+							$nombreFIndepart=$fnd['nam_depart'];
+						}
+						$mFa=number_format($prM,2);
+						$mFb=number_format($resM,2);
+				?>
+			<br/>
+			<table border="1" id="segitable" class="tamne" title="la Tabla No es adaptable">
+				<tr>
+					<td colspan="2"><?php echo "<b>$nombreFIndepart</b>"; ?></td>
+				</tr>
+				<tr>
+					<td><b>Mes</b></td>
+					<td><?php echo "$nombmes"; ?></td>
+				</tr>
+				<tr>
+					<td><b>Meta</b></td>
+					<td><b style="color:#00A5D4;;">$<?php echo "$mFa"; ?></b></td>
+				</tr>
+				<tr>
+					<td><b>Restante</b></td>
+					<td><b style="color:#FF3C3C;">$<?php echo "$mFb"; ?></b></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<a href="modifcarmeta.php?idmet=<?php echo $idM ?>" style="color:#FAFF1E;">Modifcar</a>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<a href="borrarmeta.php?idmet=<?php echo $idM ?>" style="color:#FAFF1E;" class="deli">Borrar</a>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<table border="1" id="segitable" title="la Tabla No es adaptable">
+				<?php
+						$seguidesc="SELECT seguimiento.id_seguimineto,seguimiento.empre_id_seg,seguimiento.plan_id_seg,
+					seguimiento.descuento,seguimiento.abono1,seguimiento.abono2,seguimiento.abono3,
+					seguimiento.saldo,seguimiento.en_caja,seguimiento.fi_plan,seguimiento.ff_plan,
+					seguimiento.estad_plan,seguimiento.redirec_id,seguimiento.valor_p_dire,
+					seguimiento.estado_pag_dire,seguimiento.insumos,seguimiento.estado_insumo,
+					seguimiento.id_provee,seguimiento.precio_t_prove,seguimiento.dominio,
+					seguimiento.ftp,seguimiento.usuario,seguimiento.pass_usuario_dm,seguimiento.fech_r,
+					seguimiento.correo_correo,seguimiento.pass_correo,seguimiento.usuario_face,
+					seguimiento.pass_face,seguimiento.usuario_inst,seguimiento.pass_inst,
+					seguimiento.usuario_pinters,seguimiento.pass_pinters,seguimiento.usuario_likind,
+					seguimiento.pass_likind,seguimiento.usuario_twitter,seguimiento.pass_twitter,
+					seguimiento.fecha_ingreso,
+					empresas.id_empresa,empresas.usuario_id,empresas.name_empr,empresas.nit_emp,
+					empresas.pais_emp,empresas.depart_emp,empresas.ciudad_emp,
+					planes.id_plan,planes.nombre_plan 
+					from seguimiento 
+						inner join empresas on(seguimiento.empre_id_seg=empresas.id_empresa) 
+						inner join planes on(seguimiento.plan_id_seg=planes.id_plan) 
+					where seguimiento.mes_in='$MHB' and seguimiento.year_in='$YH' and empresas.depart_emp='$dpM' 
+					order by seguimiento.year_in,seguimiento.mes_in asc";
+						$sqlsegi=mysql_query($seguidesc,$conexion) or die (mysql_error());
+				?>
+				<tr>
+					<td><b>Empresa</b></td>
+					<td><b>Plan</b></td>
+					<td><b>Valor</b></td>
+					<td><b>Descuento</b></td>
+					<td><b>Rappe</b></td>
+					<td><b>Direccionador</b></td>
+				</tr>
+				<?php
+						$sumarape=0;
+						while ($sg=mysql_fetch_array($sqlsegi)) {
+							$caa=$sg['id_seguimineto'];
+							$cab=$sg['nombre_plan'];
+							$cad=$sg['name_empr'];
+							$cae=$sg['descuento'];
+							$caf=$sg['plan_id_seg'];
+							$cam=$sg['redirec_id'];
+							$busplan="SELECT * from planes where id_plan='$caf'";
+							$sqlplan=mysql_query($busplan,$conexion) or die (mysql_error());
+							while ($pl=mysql_fetch_array($sqlplan)) {
+								$idPL=$pl['id_plan'];
+								$namPL=$pl['nombre_plan'];
+								$precPL=$pl['precio_plan'];
+							}
+							$sFa=number_format($precPL,2);
+							$sFb=number_format($cae,2);
+				?>
+				<tr>
+					<td><?php echo "$cad"; ?></td>
+					<td><?php echo "$cab"; ?></td>
+					<td>$<?php echo "$sFa"; ?></td>
+					<td>$<?php echo "$sFb"; ?></td>
+					<td>$
+						<?php
+							$resta=$precPL-$cae;
+							$sFc=number_format($resta,2);
+							echo "$sFc";
+						?>
+					</td>
+					<td>
+						<?php
+							$redireV="SELECT * from direcionador where id_direcion='$cam'";
+							$sqlredi=mysql_query($redireV,$conexion) or die (mysql_error());
+							while ($dr=mysql_fetch_array($sqlredi)) {
+								$idDR=$dr['id_direcion'];
+								$naDR=$dr['nam_direcion'];
+							}
+							echo "$naDR";
+						?>
+					</td>
+				</tr>
+				<?php
+							$sumarape=$resta+$sumarape;
+						}
+						$metar=$prM-$sumarape;
+						$modifcaion="UPDATE metas set restante_meta='$metar' where id_meta='$idM'";
+						mysql_query($modifcaion,$conexion) or die (mysql_error());
+						$sFd=number_format($sumarape,2);
+				?>
+				<tr>
+					<td colspan="4"></td>
+					<td id="resulrap">$<b style="color:#FF3C3C;"><?php echo "$sFd"; ?></b></td>
+				</tr>
+				<?php
+					}
+				?>
+			</table>
+		</article>
+	</section>
+	<footer>
+		<article id="margen">
+			<p>
+				Pie de página
+			</p>
+		</article>
+	</footer>
+</body>
+</html>
+<?php
+	}
+	else{
+		echo "<script>";
+			echo "var pag='../../erroadm.html';";
+			echo "document.location.href=pag;";
+		echo "</script>";
+	}
+?>

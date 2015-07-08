@@ -1,0 +1,49 @@
+#restcommen,#comenagregga{
+	border-bottom: 1px solid #9D9C9C;
+	display: flex;
+	margin: 1em 0;
+	padding: 0.5em 0;
+}
+	#restcommen #avatcomn,#comenagregga #avatcomn{
+		background: url(../imagenes/default.png) no-repeat scroll center center / cover rgba(255,255,255,0.2);
+		border-radius: 100%;
+		cursor: pointer;
+		height: 65px;
+		width: 65px;
+	}
+	#restcommen #feccm,#comenagregga #feccm{
+		font-size: 12px;
+		font-style: italic;
+		margin-top: 1em;
+	}
+.columndos{
+	display: flex;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	text-align: center;
+}
+.dell{
+	background: #FF3C3C;
+}
+.dell:hover,.dell:active{
+	background: #FAFF1E;
+	color: #000;
+}
+.dosbvh{
+	background: #FAFF1E;
+	color: #000;
+}
+.dosbvh:hover,.dosbvh:active{
+	background: #00A5D4;
+	color: #fff;
+}
+.eventyconemn #cajmodfibdell{
+	display: flex;
+	-webkit-justify-content: space-around;
+	-ms-justify-content: space-around;
+	justify-content: space-around;
+}
+	.eventyconemn #cajmodfibdell a{
+		padding: 0 1em;
+	}

@@ -1,0 +1,6 @@
+Seguimineto
+Tareas,
+Contabilidad
+
+ventas/comercial=decimal*100;
+pagado/diferencia=decimal*100

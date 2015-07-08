@@ -1,0 +1,50 @@
+@font-face{
+	font-family: "maiandra";
+	font-weight: bold;
+	src: url(../fuentes/Maiandra.ttf);
+}
+body{
+	font-family: 'Cabin', sans-serif;
+	font-size: 16px;
+}
+	figure img{
+		width: 100%;
+	}
+footer{
+	bottom: 0;
+	font-size: 10px;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
+	header #cod_caja{
+		text-align: center;
+		width: 20%;
+	}
+	header #logo{
+		margin-right: 40%;
+		width: 250px;
+	}
+		header #logo figcaption{
+			font-size: 12px;
+			text-align: center;
+		}
+	header #logo,header #cod_caja{
+		margin:0 auto;
+	}
+nav{
+	background: #CBC8C8;
+	font-size: 10px;
+	margin: -4em 0 2em 0;
+	text-align: center;
+}
+table{
+	margin: 0 auto;
+	width: 100%;
+}
+#cuadro{
+	border:1px solid black;
+}
+	#piso_lin span{
+		text-decoration: underline;
+	}
